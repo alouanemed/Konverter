@@ -4,14 +4,14 @@
 
   <uses-permission android:name="android.permission.INTERNET"/>
   <application
-      android:name="erikjhordanrey.ma.devfest.alouanemed.konverter.di.CurrencyApplication"
+      android:name="erikjhordanrey.konverter.di.CurrencyApplication"
       android:allowBackup="true"
       android:icon="@mipmap/ic_launcher"
       android:label="@string/app_name"
       android:supportsRtl="true"
       android:theme="@style/AppTheme">
     <activity
-        android:name="erikjhordanrey.ma.devfest.alouanemed.konverter.converter.NavigationActivity"
+        android:name="erikjhordanrey.konverter.converter.NavigationActivity"
         android:label="@string/app_name">
       <intent-filter>
         <action android:name="android.intent.action.MAIN"/>
