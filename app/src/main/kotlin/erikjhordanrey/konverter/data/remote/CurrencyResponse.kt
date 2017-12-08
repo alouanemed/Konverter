@@ -14,26 +14,11 @@
  * limitations under the License.
  */
 
-package erikjhordanrey.android_kotlin_devises.di
+package erikjhordanrey.konverter.data.remote
 
-import android.app.Application
+import com.google.gson.annotations.SerializedName
 
-class CurrencyApplication : Application() {
-
-  companion object {
-    lateinit var appComponent: AppComponent
-  }
-
-  override fun onCreate() {
-    super.onCreate()
-    initializeDagger()
-  }
-
-  fun initializeDagger() {
-    appComponent = DaggerAppComponent.builder()
-        .appModule(AppModule(this))
-        .roomModule(RoomModule())
-        .remoteModule(RemoteModule()).build()
-  }
-}
-
+data class CurrencyResponse(
+    @SerializedName(RemoteContract.SUCCESS) val isSuccess: Boolean,
+    @SerializedName(RemoteContract.QUOTES) val currencyQuotes: Map<String, Double>
+)

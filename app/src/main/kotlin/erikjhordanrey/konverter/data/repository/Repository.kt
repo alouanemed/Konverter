@@ -14,11 +14,24 @@
  * limitations under the License.
  */
 
-package erikjhordanrey.android_kotlin_devises.data.remote
+package erikjhordanrey.konverter.data.repository
 
-import com.google.gson.annotations.SerializedName
+import android.arch.lifecycle.LiveData
+import erikjhordanrey.konverter.domain.AvailableExchange
+import erikjhordanrey.konverter.domain.Currency
+import io.reactivex.Flowable
 
-data class CurrencyResponse(
-    @SerializedName(RemoteContract.SUCCESS) val isSuccess: Boolean,
-    @SerializedName(RemoteContract.QUOTES) val currencyQuotes: Map<String, Double>
-)
+
+interface Repository {
+
+  fun getTotalCurrencies(): Flowable<Int>
+
+  fun addCurrencies()
+
+  fun getCurrencyList(): LiveData<List<Currency>>
+
+  fun getAvailableExchangeFromFirebase(currency1: String, currency2: String): LiveData<AvailableExchange>
+
+  fun getAvailableExchange(currencies: String): LiveData<AvailableExchange>
+
+}

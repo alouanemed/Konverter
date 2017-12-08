@@ -14,7 +14,17 @@
  * limitations under the License.
  */
 
-package erikjhordanrey.android_kotlin_devises.domain
+package erikjhordanrey.konverter.di
 
-data class Currency(var code: String, var country: String)
+import dagger.Component
+import erikjhordanrey.konverter.converter.CurrencyViewModel
+import javax.inject.Singleton
+
+@Component(modules = arrayOf(AppModule::class, RoomModule::class, RemoteModule::class))
+@Singleton interface AppComponent {
+
+  fun inject(currencyViewModel: CurrencyViewModel)
+
+}
+
 

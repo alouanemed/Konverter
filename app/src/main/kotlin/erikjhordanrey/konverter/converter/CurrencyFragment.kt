@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package erikjhordanrey.android_kotlin_devises.view
+package erikjhordanrey.konverter.converter
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
@@ -29,7 +29,7 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.TextView
 import android.widget.Toast
-import erikjhordanrey.android_kotlin_devises.R
+import erikjhordanrey.konverter.R
 import kotlinx.android.synthetic.main.currency_fragment.*
 
 

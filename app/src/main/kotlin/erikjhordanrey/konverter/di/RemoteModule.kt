@@ -14,14 +14,14 @@
  * limitations under the License.
  */
 
-package erikjhordanrey.android_kotlin_devises.di
+package erikjhordanrey.konverter.di
 
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
-import erikjhordanrey.android_kotlin_devises.data.remote.RemoteContract
-import erikjhordanrey.android_kotlin_devises.data.remote.RemoteCurrencyService
+import erikjhordanrey.konverter.data.remote.RemoteContract
+import erikjhordanrey.konverter.data.remote.RemoteCurrencyService
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit

@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-package erikjhordanrey.android_kotlin_devises.di
+package erikjhordanrey.konverter.di
 
 import android.content.Context
 import dagger.Module
 import dagger.Provides
-import erikjhordanrey.android_kotlin_devises.data.room.RoomCurrencyDataSource
+import erikjhordanrey.konverter.data.room.RoomCurrencyDataSource
 import javax.inject.Singleton
 
 @Module

@@ -14,22 +14,26 @@
  * limitations under the License.
  */
 
-package erikjhordanrey.android_kotlin_devises.data.repository
+package erikjhordanrey.konverter.di
 
-import android.arch.lifecycle.LiveData
-import erikjhordanrey.android_kotlin_devises.domain.AvailableExchange
-import erikjhordanrey.android_kotlin_devises.domain.Currency
-import io.reactivex.Flowable
+import android.app.Application
 
+class CurrencyApplication : Application() {
 
-interface Repository {
+  companion object {
+    lateinit var appComponent: AppComponent
+  }
 
-  fun getTotalCurrencies(): Flowable<Int>
+  override fun onCreate() {
+    super.onCreate()
+    initializeDagger()
+  }
 
-  fun addCurrencies()
-
-  fun getCurrencyList(): LiveData<List<Currency>>
-
-  fun getAvailableExchange(currencies: String): LiveData<AvailableExchange>
-
+  fun initializeDagger() {
+    appComponent = DaggerAppComponent.builder()
+        .appModule(AppModule(this))
+        .roomModule(RoomModule())
+        .remoteModule(RemoteModule()).build()
+  }
 }
+

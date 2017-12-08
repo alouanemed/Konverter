@@ -14,18 +14,10 @@
  * limitations under the License.
  */
 
-package erikjhordanrey.android_kotlin_devises.di
+package erikjhordanrey.konverter.domain
 
-import android.content.Context
-import dagger.Module
-import dagger.Provides
-import javax.inject.Singleton
+import java.io.Serializable
 
-@Module
-class AppModule(private val currencyApplication: CurrencyApplication) {
-
-  @Provides @Singleton fun provideContext(): Context = currencyApplication
-
-}
-
+data class
+AvailableExchange(var availableExchangesMap: Map<String, Double>): Serializable
 

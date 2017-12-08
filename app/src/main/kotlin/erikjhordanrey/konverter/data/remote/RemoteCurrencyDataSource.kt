@@ -14,21 +14,14 @@
  * limitations under the License.
  */
 
-package erikjhordanrey.android_kotlin_devises.data.remote
+package erikjhordanrey.konverter.data.remote
 
-import io.reactivex.Observable
-import retrofit2.http.GET
-import retrofit2.http.Query
+import javax.inject.Inject
 
-interface RemoteCurrencyService {
+class RemoteCurrencyDataSource @Inject constructor(private val remoteCurrencyService: RemoteCurrencyService) {
 
-  @GET(RemoteContract.LIVE)
-  fun requestAvailableExchange(
-      @Query(RemoteContract.ACCESS_KEY) accessKey: String,
-      @Query(RemoteContract.CURRENCIES) currencies: String,
-      @Query(RemoteContract.FORMAT) format: String
-  ): Observable<CurrencyResponse>
-
+  fun requestAvailableExchange(currencies: String) =
+      remoteCurrencyService.requestAvailableExchange(
+          RemoteContract.ACCESS_KEY_API_LAYER, currencies, RemoteContract.FORMAT_TYPE)
 }
-
 

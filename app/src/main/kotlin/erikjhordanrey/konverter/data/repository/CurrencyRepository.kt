@@ -14,16 +14,16 @@
  * limitations under the License.
  */
 
-package erikjhordanrey.android_kotlin_devises.data.repository
+package erikjhordanrey.konverter.data.repository
 
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
-import erikjhordanrey.android_kotlin_devises.data.remote.CurrencyResponse
-import erikjhordanrey.android_kotlin_devises.data.remote.RemoteCurrencyDataSource
-import erikjhordanrey.android_kotlin_devises.data.room.CurrencyEntity
-import erikjhordanrey.android_kotlin_devises.data.room.RoomCurrencyDataSource
-import erikjhordanrey.android_kotlin_devises.domain.AvailableExchange
-import erikjhordanrey.android_kotlin_devises.domain.Currency
+import erikjhordanrey.konverter.data.remote.CurrencyResponse
+import erikjhordanrey.konverter.data.remote.RemoteCurrencyDataSource
+import erikjhordanrey.konverter.data.room.CurrencyEntity
+import erikjhordanrey.konverter.data.room.RoomCurrencyDataSource
+import erikjhordanrey.konverter.domain.AvailableExchange
+import erikjhordanrey.konverter.domain.Currency
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
@@ -36,14 +36,14 @@ class CurrencyRepository @Inject constructor(
     private val remoteCurrencyDataSource: RemoteCurrencyDataSource
 ) : Repository {
 
-  val allCompositeDisposable: MutableList<Disposable> = arrayListOf()
-
-  override fun getTotalCurrencies() = roomCurrencyDataSource.currencyDao().getCurrenciesTotal()
-
-  override fun addCurrencies() {
-    val currencyEntityList = RoomCurrencyDataSource.getAllCurrencies()
-    roomCurrencyDataSource.currencyDao().insertAll(currencyEntityList)
+  override fun getAvailableExchangeFromFirebase(currency1: String,
+      currency2: String): LiveData<AvailableExchange> {
+    TODO(
+        "not implemented")
   }
+
+
+  val allCompositeDisposable: MutableList<Disposable> = arrayListOf()
 
   override fun getCurrencyList(): LiveData<List<Currency>> {
     val roomCurrencyDao = roomCurrencyDataSource.currencyDao()
@@ -51,11 +51,19 @@ class CurrencyRepository @Inject constructor(
     val disposable = roomCurrencyDao.getAllCurrencies()
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
-        .subscribe({ currencyList ->
+        .subscribe({ currencyList: List<CurrencyEntity> ->
           mutableLiveData.value = transform(currencyList)
         }, { t: Throwable? -> t!!.printStackTrace() })
     allCompositeDisposable.add(disposable)
     return mutableLiveData
+  }
+
+
+  override fun getTotalCurrencies() = roomCurrencyDataSource.currencyDao().getCurrenciesTotal()
+
+  override fun addCurrencies() {
+    val currencyEntityList = RoomCurrencyDataSource.getAllCurrencies()
+    roomCurrencyDataSource.currencyDao().insertAll(currencyEntityList)
   }
 
   private fun transform(currencies: List<CurrencyEntity>): List<Currency> {
@@ -84,6 +92,17 @@ class CurrencyRepository @Inject constructor(
 
   private fun transform(exchangeMap: CurrencyResponse): AvailableExchange {
     return AvailableExchange(exchangeMap.currencyQuotes)
+  }
+
+  private fun processCurrencies(currency1: String, currency2: String,
+      dataToResponse: CurrencyResponse): HashMap<String, Double> {
+    val exchangeValues: HashMap<String, Double> = HashMap()
+    dataToResponse.currencyQuotes.forEach({
+      if (it.key.equals("USD" + currency1) || it.key.equals("USD" + currency2)) {
+        exchangeValues.put(it.key, it.value)
+      }
+    })
+    return exchangeValues
   }
 
 }

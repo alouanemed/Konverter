@@ -14,22 +14,24 @@
  * limitations under the License.
  */
 
-package erikjhordanrey.android_kotlin_devises.data.room
+package erikjhordanrey.konverter.data.room
 
-class RoomContract {
+import android.arch.persistence.room.Dao
+import android.arch.persistence.room.Insert
+import android.arch.persistence.room.Query
+import io.reactivex.Flowable
 
-  companion object {
+@Dao
+interface RoomCurrencyDao {
 
-    const val DATABASE_CURRENCY = "currency.db"
+  @Query(RoomContract.SELECT_CURRENCIES_COUNT)
+  fun getCurrenciesTotal(): Flowable<Int>
 
-    const val TABLE_CURRENCIES = "currencies"
+  @Insert
+  fun insertAll(currencies: List<CurrencyEntity>)
 
-    private const val SELECT_COUNT = "SELECT COUNT(*) FROM "
-    private const val SELECT_FROM = "SELECT * FROM "
+  @Query(RoomContract.SELECT_CURRENCIES)
+  fun getAllCurrencies(): Flowable<List<CurrencyEntity>>
 
-    const val SELECT_CURRENCIES_COUNT = SELECT_COUNT + TABLE_CURRENCIES
-    const val SELECT_CURRENCIES = SELECT_FROM + TABLE_CURRENCIES
-
-  }
 }
 

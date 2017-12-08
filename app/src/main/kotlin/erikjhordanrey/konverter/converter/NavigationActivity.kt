@@ -14,14 +14,14 @@
  * limitations under the License.
  */
 
-package erikjhordanrey.android_kotlin_devises.view
+package erikjhordanrey.konverter.converter
 
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
-import erikjhordanrey.android_kotlin_devises.R
+import erikjhordanrey.konverter.R
 import kotlinx.android.synthetic.main.activity_main.*
 
 

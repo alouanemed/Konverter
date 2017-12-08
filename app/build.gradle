@@ -7,13 +7,12 @@ android {
   compileSdkVersion 27
   buildToolsVersion "27.0.1"
   defaultConfig {
-    applicationId "erikjhordanrey.android_kotlin_devises"
+    applicationId "erikjhordanrey.konverter"
     minSdkVersion 15
     targetSdkVersion 27
     versionCode 1
     versionName "1.0"
     vectorDrawables.useSupportLibrary = true
-
   }
 
   buildTypes {

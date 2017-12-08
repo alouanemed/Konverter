@@ -14,16 +14,16 @@
  * limitations under the License.
  */
 
-package erikjhordanrey.android_kotlin_devises.view
+package erikjhordanrey.konverter.converter
 
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import android.util.Log
-import erikjhordanrey.android_kotlin_devises.data.repository.CurrencyRepository
-import erikjhordanrey.android_kotlin_devises.di.CurrencyApplication
-import erikjhordanrey.android_kotlin_devises.domain.AvailableExchange
-import erikjhordanrey.android_kotlin_devises.domain.Currency
+import erikjhordanrey.konverter.data.repository.CurrencyRepository
+import erikjhordanrey.konverter.di.CurrencyApplication
+import erikjhordanrey.konverter.domain.AvailableExchange
+import erikjhordanrey.konverter.domain.Currency
 import io.reactivex.Completable
 import io.reactivex.CompletableObserver
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -44,12 +44,14 @@ class CurrencyViewModel : ViewModel() {
   init {
     initializeDagger()
   }
-
-
+  
   fun getAvailableExchange(currencies: String): LiveData<AvailableExchange>? {
     liveAvailableExchange = null
     liveAvailableExchange = MutableLiveData<AvailableExchange>()
     liveAvailableExchange = currencyRepository.getAvailableExchange(currencies)
+
+    //Todo : uncomment this after firebase being added
+    //liveAvailableExchange = currencyRepository.getAvailableExchangeFromFirebase(currencies.split(",")[0],currencies.split(",")[1])
     return liveAvailableExchange
   }
 
@@ -105,6 +107,7 @@ class CurrencyViewModel : ViewModel() {
           }
         })
   }
+
 
 
   private fun initializeDagger() = CurrencyApplication.appComponent.inject(this)

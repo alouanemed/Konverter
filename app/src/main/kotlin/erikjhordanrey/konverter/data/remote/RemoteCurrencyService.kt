@@ -14,16 +14,20 @@
  * limitations under the License.
  */
 
-package erikjhordanrey.android_kotlin_devises.di
+package erikjhordanrey.konverter.data.remote
 
-import dagger.Component
-import erikjhordanrey.android_kotlin_devises.view.CurrencyViewModel
-import javax.inject.Singleton
+import io.reactivex.Observable
+import retrofit2.http.GET
+import retrofit2.http.Query
 
-@Component(modules = arrayOf(AppModule::class, RoomModule::class, RemoteModule::class))
-@Singleton interface AppComponent {
+interface RemoteCurrencyService {
 
-  fun inject(currencyViewModel: CurrencyViewModel)
+  @GET(RemoteContract.LIVE)
+  fun requestAvailableExchange(
+      @Query(RemoteContract.ACCESS_KEY) accessKey: String,
+      @Query(RemoteContract.CURRENCIES) currencies: String,
+      @Query(RemoteContract.FORMAT) format: String
+  ): Observable<CurrencyResponse>
 
 }
 

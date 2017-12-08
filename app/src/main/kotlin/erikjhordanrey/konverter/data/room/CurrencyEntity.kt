@@ -14,14 +14,15 @@
  * limitations under the License.
  */
 
-package erikjhordanrey.android_kotlin_devises.data.remote
+package erikjhordanrey.konverter.data.room
 
-import javax.inject.Inject
+import android.arch.persistence.room.Entity
+import android.arch.persistence.room.PrimaryKey
 
-class RemoteCurrencyDataSource @Inject constructor(private val remoteCurrencyService: RemoteCurrencyService) {
-
-  fun requestAvailableExchange(currencies: String) =
-      remoteCurrencyService.requestAvailableExchange(
-          RemoteContract.ACCESS_KEY_API_LAYER, currencies, RemoteContract.FORMAT_TYPE)
-}
+@Entity(tableName = RoomContract.TABLE_CURRENCIES)
+data class CurrencyEntity(
+    @PrimaryKey(autoGenerate = true) val id: Long,
+    var countryCode: String,
+    var countryName: String
+)
 
