@@ -44,14 +44,11 @@ class CurrencyViewModel : ViewModel() {
   init {
     initializeDagger()
   }
-  
+
   fun getAvailableExchange(currencies: String): LiveData<AvailableExchange>? {
     liveAvailableExchange = null
-    liveAvailableExchange = MutableLiveData<AvailableExchange>()
-    liveAvailableExchange = currencyRepository.getAvailableExchange(currencies)
-
-    //Todo : uncomment this after firebase being added
-    //liveAvailableExchange = currencyRepository.getAvailableExchangeFromFirebase(currencies.split(",")[0],currencies.split(",")[1])
+  //  liveAvailableExchange = MutableLiveData<AvailableExchange>()
+  liveAvailableExchange = currencyRepository.getAvailableExchangeFromFirebase(currencies.split(",")[0],currencies.split(",")[1])
     return liveAvailableExchange
   }
 

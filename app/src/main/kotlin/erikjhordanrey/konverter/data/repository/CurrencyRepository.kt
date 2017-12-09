@@ -18,6 +18,10 @@ package erikjhordanrey.konverter.data.repository
 
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import erikjhordanrey.konverter.data.remote.CurrencyResponse
 import erikjhordanrey.konverter.data.remote.RemoteCurrencyDataSource
 import erikjhordanrey.konverter.data.room.CurrencyEntity
@@ -36,10 +40,32 @@ class CurrencyRepository @Inject constructor(
     private val remoteCurrencyDataSource: RemoteCurrencyDataSource
 ) : Repository {
 
-  override fun getAvailableExchangeFromFirebase(currency1: String,
-      currency2: String): LiveData<AvailableExchange> {
-    TODO(
-        "not implemented")
+  override fun getAvailableExchangeFromFirebase(fromCurrency: String,
+      toCurrency: String): LiveData<AvailableExchange> {
+    val mutableLiveData = MutableLiveData<AvailableExchange>()
+    //Get Data from Firebase and select quotes child
+    FirebaseDatabase.getInstance()
+        .getReference().child("quotes")
+        .addListenerForSingleValueEvent(object : ValueEventListener {
+          //if the operation is failed
+          override fun onCancelled(error: DatabaseError?) {
+            mutableLiveData.value = null
+          }
+
+          //if the operation succeeded, extract data and return exchange rate to the VM
+          override fun onDataChange(data: DataSnapshot?) {
+            if (data?.exists()!!) {
+              var dataToResponse = CurrencyResponse(true, data.value as Map<String, Double>)
+
+              dataToResponse = CurrencyResponse(true, processCurrencies(fromCurrency, toCurrency,
+                  dataToResponse))
+
+              mutableLiveData.value = transform(dataToResponse)
+            }
+          }
+        })
+
+    return mutableLiveData
   }
 
 
